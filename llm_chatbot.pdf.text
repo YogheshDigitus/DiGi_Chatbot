@@ -1,0 +1,189 @@
+Page 1:
+Today, I'll be showing you how to make a Python AI  chapot in just a few minutes.  And the best part is
+this chapot will run locally,  meaning we don't need to pay for a subscription or connect to something like
+open AI.  Now, the first step here is to download Olama.  So go to olama.com, simply press on download, 
+install this application, and this is what we'll use to run LLM locally on our machine.  Once you've installed
+Olama, the next step is to make sure the installation is working properly.  To do that, you're going to
+open up a terminal or a command prompt,  and you're going to type in the following command, which is
+simply Olama.  Now, this should be working if Olama is running on your computer,  and assuming this
+command works, you're ready to move on to the next step.  Now, Olama is software that allows us to
+download and run open source LLM.  I have a list of them on the right hand side of my screen,  and I'll
+link  this  in  the  description.   You  can  see  we  can  access  LLM3  with  8  billion  parameters,  7  billion
+parameters.  We have a lot of other models available to us as well.  Now, notice that these models vary in
+size, and the larger the model is,
+the more difficult it's going to be to run in terms of the type of hardware you need on your machine. 
+Now, if you scroll down here, you'll see there's some different specifications.  You should have at least 8
+gigabytes of RAM to run the 7 billion parameter models,  and then 16 to run 13 billion, and 32 to run the
+33 billion models.  So make sure that you meet that criteria before pulling these specific models.  Now,
+for our purposes, we're just going to use the LLM3 model with 8 billion parameters,  and in order to get
+
+
+Page 2:
+that  on  our  computer,  we're  going  to  type  the  following  command.   This  is  Olama,  pull,  and  then  the
+name of the model that we want,  and this is simply LLM3.  When we do that, it's going to download this
+model for us.  This will take a bit of time, depending on how fast your internet connection is,  and then
+you'll be ready to use it.  In my case, it's already downloaded, so it happened instantly,  but for you, it will
+take  a  few  minutes  to  download,   and  then  I'll  show  you  how  we  can  test  it.   Now  that  the  model  is
+downloaded, we can test it out,  and in order to do that, we can simply type Olama,  run, and then the
+name of the model that we want.
+It's worth noting that you can have multiple models here,  and you can use them by simply specifying
+their name.  So I'm going to run LLM3.  I'll just go with something like HelloWorld,  and then you can see
+that it actually gives us a response.  If you want to quit this, you can type slash by,  and then you will exit
+that prompt.  So now that we have access to this LLM,  it's time to start using it from Python.  Now using
+LLM's like this in Python is actually surprisingly easy,  and you don't need to be an AI expert in order to
+work with them.  However, I always find it interesting to learn  about how they work at a deeper level, 
+and that's where our sponsor, Brilliant, can help.  Brilliant is where you learn by doing,  with thousands of
+interactive lessons in math,  data analysis, programming, and AI.  They use a first principles approach, 
+meaning  you'll  get  the  why  behind  everything.   Each  lesson  is  interactive  and  filled  with  hands-on
+problem-solving,  which is six times more effective than just watching lectures.  The content is created by
+
+
+Page 3:
+award-winning teachers, researchers,  and pros from places like MIT, Caltech, and Google.
+Brilliant  focuses  on  improving  your  critical  thinking  skills   through  problem-solving,  not  memorizing.  
+While you're learning specific topics,  you're also training your brain to think better.  Learning a bit every
+day is super important,  and Brilliant makes that easy.  Their fun, bite-sized lessons fit into any schedule, 
+helping  you  gain  real  knowledge  in  just  minutes  a  day.   It's  a  great  alternative  to  mindless  scrolling.  
+Brilliant even has an entire AI workshop  that deep dives into how LLM's work,  and teaches you about the
+importance of training data,  how to tune in LLM, and more.  To try everything Brilliant has to offer for
+free  for a full 30 days, visit brilliant.org slash tech with Tim,  or click the link in the description.  You'll
+also  get  20%  off  an  annual  premium  subscription.   Now  the  next  step  here  is  to  create  a  virtual
+environment  that will install a few different dependencies in  that we need for this project.  What I've
+done is open to folder,  Invisual Studio Code,  and the command I'm going to use now is python3-m,
+
+
+Page 4:
+then v, and then I'm going to give this virtual environment  a name, which is chatbot.  If you're on macro
+Linux,  this  will  be  the  command.   If  you're  on  Windows,  you  can  change  this  to  Python,   and  this  will
+create an environment for us  that we can have some isolated dependencies inside.  You can see the
+chopoff folder has now been created.  And the next step is to activate the virtual environment  and then
+install our packages.  Now if you're on macro Linux, the command  to activate this environment is the
+following.  It is simply source, the name of your environment,  which in this case is chatbot,  and then bin
+slash activate.  If you did this successfully,  you'll see that the name of your virtual environment  will
+prefix your terminal.  Now if you are on Windows,  the command can vary depending on the shell  that
+you're using.  One of the commands that you can attempt is the following.  Backslash, venv, or in this
+case,  it's going to be chatbot, the name of your virtual environment.  Slash scripts with a capital, slash
+activate.  And then this is bet.  Executing this should initialize the virtual environment  if you are running
+in command prompt.  If you are running in PowerShell,
+
+
+Page 5:
+then you can change this to say dot ps1  and put a capital on activate.  So try one of these commands to
+activate the virtual environment  on Windows.  And again, make sure you have that prefix  before we
+move forward.  Now the next step is to install the packages that we need.  I'm just going to make this a
+bit  smaller   so  we  can  read  all  of  them.   We're  going  to  install  the  Langchain  module,   the
+Langchain-Olama module,  and the Olama module.  So go ahead and hit enter.  This will install it inside of
+our virtual environment.  And then we are good to go and start creating this application  that we'll use
+our local LL app.  The next step here is to simply create a Python file.  We can call this something like
+main.py  and now to start writing our code.  Now in order to interact with Olama,  what we're going to do
+is  say  from  Langchain  underscore  Olama,   we're  going  to  import  the  Olama  LLM.   Now  here  we  can
+connect to Olama  so we can say that our model is equal to Olama LLM.  And then all we need to do is
+specify the model
+
+
+Page 6:
+that we want to work with.  Now in this case, it is LLama3,  but if you have a different model,  you can put
+that here.  Now we could actually use this model.  In order to use it, we can say model.invoke  and then
+we can pass to this function here  a prompt that it will act upon.  So you can see that I can pass some
+input.  Say input is equal to hello world.  We can store this in some kind of result.  And then simply print
+this out to make sure that it's working.  So let's print out the result and execute our code.  So from my
+virtual environment,  I'm going to type Python 3 and then main.py  and notice here that we're going to
+get some warning.  You can ignore that for now.  And you can see that we get the response,  which is
+hello there.  It's nice to meet you.  And we've invoked the model with this input.  So that's the basics of
+interacting  with  the  model.   But  I'm  going  to  show  you  a  slightly  more  complicated  script  here   that
+explains how we can pass some context to the model  and how we can make this a little bit more user
+friendly  and have a full chat window interface to interact with it.  So in order to do that,
+
+
+Page 7:
+we're going to start by bringing in something known as a prompt template.  So I'm going to say from a
+Langchengor.promptz   and  we  are  going  to  import  the  chat  prompt  template.   Now  Langcheng  is
+something that allows us to more easily interact with LLMs.  And one of the things we can do is create a
+template  that will pass to the LLM that contains our specific query or prompt.  And this way we can give
+it some more description  and instruction on what it should do.  So I'm going to say template is equal to 
+and then I'm going to do a multi-line string,  which is simply three quotation marks.  And I'm going to tell
+the model to answer the question below.  But you can give this any kind of detail that you want.  Now I'm
+also going to provide to this some context.  So I'm going to say here is the conversation history.  And I'm
+going to pass to this the context.  Now whenever I want to embed a variable inside of a prompt  that I'm
+passing to the model,  I can surround that in curly braces,  which I'm doing here.  And then I'm going to
+say a question.
+
+
+Page 8:
+And I'm going to pass the question variable as well.  And then I'm going to have the answer,  which I'm
+expecting the model to generate.  So you can see I'm giving this a template  for how it should behave or
+respond to my queries.  Now we have our model.  The next thing we're going to do is create our prompt. 
+So we're going to say the prompt is equal to the chat prompt template.  From and this is going to be
+template.  And then we're going to pass that template that we just wrote,  which is called template.  Now
+we have a prompt and we have a model.  And what we need to do is chain these together using length
+chain.  So what I can do is say chain is equal to prompt.  And then I can use this pipe operator.  And I can
+pass my model.  What this will do is create a chain of these two operations.  So the first thing we'll have
+is our prompt,  which we'll have the question and context embedded inside of.  Then we'll pass it to the
+model where it will be invoked automatically.  So in order to use the chain now,  we can change this
+slightly.  So rather than model.invoke,  we're going to say chain.invoke.  But this time what we need to do
+is pass to it the various variables that are inside of our prompt.
+
+
+Page 9:
+So we're going to say the context is equal to,  in this case, we don't have any context.  So we'll leave it
+blank.  And then we'll say the question is,  and then whatever our question is,  and we can just say, hey,
+how are you?  So hopefully you get the idea here.  Let me make this a bit bigger so we can read it.  We're
+simply embedding these two variables inside of the prompt.  And then passing that prompt to the model
+where it will be invoked  using the langging.  So now we can test this Python3main.py.  And it says, I'm
+doing well.  Thanks for asking.  Now that's great,  but we want to be able to continually talk with the
+model  and store a conversation history.  So let's write the code to handle that.  So what I'm going to do
+now is create a function called handle and then  conversation.  And this is where we'll kind of put all of
+our main code inside of here.  I'm going to start by storing some context,  which will just be an empty
+string.  And I'm going to print some kind of welcome message.  So I'll say welcome to the AI chat bot.
+
+
+Page 10:
+And then we'll just tell them that they can type something like exit  to quit.  So they have a way to get
+out of this.  On the next line, we're going to make a wild loop.  And we're going to say, while true.  And
+inside of here, we're going to collect some input from the user.  So we're going to say user input is equal
+to input.  And we'll just put you colon and then a space  that the user has the ability to type.  We're going
+to say if the user input dot lower.  So converting this to lowercase is equal to that exit keyword.  Then we
+are going to break out of the loops that we don't have an infinite loop.  Now next, we're just going to
+generate a response.  So we can take this right here and bring this up.  So let's paste that inside of here
+and indent this properly.  Okay, let me just get rid of this print.  Now we're going to say the result is equal
+to chain dot invoke.  But this time we're going to pass the conversation context.  And we're going to pass
+the question the user asked,  which is simply the user input.  Now what we can do is we can print the
+response.  So we can say the bot said and then whatever the result was here.
+
+
+Page 11:
+And then what I'm going to do is just store all of this in the context.  So that this bot has kind of the
+conversation history.  And they can respond to previous things that have been set.  So I'm going to say
+context plus equals two.  And then we're going to use an F string available on Python 3.6 and above.  I'm
+going to put a new line character with the backslash end.  I'm going to say user is equal to and I'm going
+to embed the user input.  And then I'm going to do backslash M and I'm going to say the AI.  And then
+this is equal to the result.  So I'm just storing what the user asked and what the result was.  So now every
+single time I use this prompt,  I'm passing all of this context back into the bot.  So it knows what was said
+previously  and  can  use  that  to  respond.   So  that  is  our  function.   Now  all  we  need  to  do  is  call  that
+function.  So I'm going to say if underscore underscore name equals equals underscore  underscore main
+underscore  underscore.   This  just  means  that  we're  directly  executing  this  Python  file.   And  then  I'm
+going to say handle conversation.  And now we are going to run this function,  which will simply ask the
+user to keep typing in things until they hit or enter exit.
+
+
+Page 12:
+And it will store the conversation history and pass that back to our models  that it can respond based on
+what we said previously.  So let's test this out and make sure it works.  Python 3 main.py.  Welcome to
+the AI chat.  But we're going to say, hey, how are you doing?  It's going to give us some response.  I'm
+going to say what is your name?  Great.  No personal name.  Let's find.  Can you help me?  Understand
+history.  Let's see what it says.  And it gives us this long response here,  which I imagine is saying yes, it
+can help us if we give it a good question.  Let's try to exit with exit.  And now we are gone.  And there
+you go.  You've now created a program that we can actually interact with a local LLM.  We don't need an
+open AI key.  We don't need to pay any third party service.  We can run this open source model on our
+own computer  and utilize it from our Python script.  Obviously, this is a very simple example.  You can do
+some really cool things that are a lot more complicated.
+
+
+Page 13:
+But that's what I wanted to show you in this video.  Hopefully you found this helpful.  If you did, make
+sure you leave a like.  Subscribe to the channel.  And I will see you in the next one.
+
+
+Page 14:
+
+
