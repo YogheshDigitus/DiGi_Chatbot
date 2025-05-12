@@ -23,9 +23,14 @@ from Video_Processor import process_file as Video_process_file
 from logs import log_query,EmptyAIResponse, update_user_feedback
 from user_data_pool import get_or_create_user_id
 import uuid
-from dotenv import load_dotenv
+import openai
 import os
-os.environ['OPENAI_API_KEY'] = "-------------OpenAI API Key----------------------------------"
+from dotenv import load_dotenv
+from openai import OpenAI
+load_dotenv()  # Load environment variables from .env
+
+openai.api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI()
 user_name = 'Yoghesh'
 user_id=get_or_create_user_id(user_name)
 message_id = str(uuid.uuid4())

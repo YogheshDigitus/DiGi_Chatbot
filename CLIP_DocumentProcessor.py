@@ -18,19 +18,12 @@ import torch
 from langchain_community.vectorstores.utils import filter_complex_metadata
 from docx import Document as DocxDocument
 from docx.shared import Inches
-# import pytesseract
-# import openai
 from sklearn.metrics.pairwise import cosine_similarity
 from langchain_community.document_loaders.csv_loader import CSVLoader
 from langchain_openai import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-# from langchain.docstore.document import Document
-from openai import OpenAI
-# import json
-from dotenv import load_dotenv
-# import requests
 
-# Initialize CLIP model and processor from Hugging Face
+
 
 path= r"C:\Users\DELL\Desktop\Chatbot\My_chat_bot\Transformers"
 clip_model = CLIPModel.from_pretrained(path)
@@ -52,10 +45,9 @@ class CSVProcessor:
         docs = self.loader.load()
 
 class PDFProcessor:
-    def __init__(self, file_path, file_extension,persist_directory='persist_chroma_pdf'):
+    def __init__(self, file_path, file_extension):
         self.file_path = file_path
         self.file_extension=file_extension
-        self.persist_directory = persist_directory
         self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")  # CLIP for both text and image embeddings
         self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")  # CLIP processor for images
         self.subject = None
@@ -114,7 +106,6 @@ class PDFProcessor:
             "hnsw:search_ef": 100
         },
         data_loader=data_loader)
-        Summary_collection=Chroma_client.get_or_create_collection(name='Summary_collection',embedding_function=embed_func)
         ids_text=[f"{filename}_text{id+1}" for id in range(len(chunks))]
         collection3.add(
             documents=chunks,

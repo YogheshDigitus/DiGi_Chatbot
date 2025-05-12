@@ -28,10 +28,9 @@ from dotenv import load_dotenv
 
 
 class Video_Processor:
-    def __init__(self, file_path, true_file_name,persist_directory='persist_chroma_pdf'):
+    def __init__(self, file_path, true_file_name):
         self.file_path = file_path
         self.true_file_name=true_file_name
-        self.persist_directory = persist_directory
         self.embedding = OpenCLIPEmbeddingFunction()
 
     def process(self,file_name):

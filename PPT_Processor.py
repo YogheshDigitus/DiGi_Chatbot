@@ -31,10 +31,9 @@ os.environ['OPENAI_API_KEY'] = "sdasdfasvcvafvsdafasdfvvvfdqd"
 
 
 class PPT_Processor:
-    def __init__(self, file_path,file_extension, persist_directory='persist_chroma_pdf'):
+    def __init__(self, file_path,file_extension):
         self.file_path = file_path
         self.file_extension=file_extension
-        self.persist_directory = persist_directory
         self.embedding = OpenCLIPEmbeddingFunction()
 
     def process(self,file_name):

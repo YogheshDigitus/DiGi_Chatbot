@@ -5,6 +5,7 @@ import chromadb.api
 import pythoncom
 import chromadb
 import numpy as np
+import openai
 from docx2pdf import convert
 import fitz  # PyMuPDF
 from io import BytesIO
@@ -18,22 +19,18 @@ import torch
 from langchain_community.vectorstores.utils import filter_complex_metadata
 from docx import Document as DocxDocument
 from docx.shared import Inches
-# import pytesseract
-# import openai
 from sklearn.metrics.pairwise import cosine_similarity
 from langchain_community.document_loaders.csv_loader import CSVLoader
 from langchain_openai import OpenAIEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-# from langchain.docstore.document import Document
+from header_Footer_watermark import crop_fixed_header_footer_and_remove_images
 from openai import OpenAI
-# import json
 from dotenv import load_dotenv
-# import requests
+load_dotenv()  # Load environment variables from .env
+openai.api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI()
 
 #setting up the OpenAI API key 
-#chroma_client = chromadb.PersistentClient(path=r"C:\Users\DELL\Desktop\Chatbot\My_chat_bot\VectorDB")# can also use server local
-#path= r"C:\Users\DELL\Desktop\Chatbot\My_chat_bot\Transformers"
-# Initialize CLIP model and processor from Hugging Face
 
 path= r"C:\Users\DELL\Desktop\Chatbot\My_chat_bot\Transformers"
 clip_model = CLIPModel.from_pretrained(path)
@@ -44,9 +41,8 @@ clip_model.to(device)
 
 
 class CSVProcessor:
-    def __init__(self, file_path, persist_directory='persist_chroma_csv'):
+    def __init__(self, file_path):
         self.file_path = file_path
-        self.persist_directory = persist_directory
         self.loader = CSVLoader(file_path=self.file_path, encoding='utf-8', csv_args={'delimiter': '|'})
         self.embedding = OpenAIEmbeddings()
 
@@ -55,10 +51,9 @@ class CSVProcessor:
         docs = self.loader.load()
 
 class PDFProcessor:
-    def __init__(self, file_path, file_extension,persist_directory='persist_chroma_pdf'):
+    def __init__(self, file_path, file_extension):
         self.file_path = file_path
         self.file_extension=file_extension
-        self.persist_directory = persist_directory
         self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")  # CLIP for both text and image embeddings
         self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")  # CLIP processor for images
         self.subject = None
@@ -201,6 +196,7 @@ def process_file(file_path):
     file_name = os.path.basename(file_path)
     file = os.path.splitext(file_name)
     filename = file[0]
+    path_without_ext = os.path.splitext(file_path)[0]
     
     if file_extension == '.csv':
         processor = CSVProcessor(file_path)
@@ -210,7 +206,9 @@ def process_file(file_path):
         convert(file_path,output_path)
         processor=PDFProcessor(output_path,file_extension)
     elif file_extension=='.pdf':
-        processor = PDFProcessor(file_path,file_extension)
+        output_file=f"{path_without_ext}_updated.pdf"
+        crop_fixed_header_footer_and_remove_images(file_path,output_file)
+        processor = PDFProcessor(output_file,file_extension)
     else:
         raise ValueError(f"Unsupported file type: {file_extension}")
     print(filename)
@@ -238,5 +236,4 @@ def get_text_from_Pdf(file_path):
     
         return full_text
 
-    # Return the processed data and vector stores for further use
-   # return extracted_docs, image_embeddings, image_paths, text_vectordb # the last line is not needed
+
